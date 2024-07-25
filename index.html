@@ -17,7 +17,6 @@
             const timeInMilliseconds = timeInSeconds * 1000;
 
             // Check if the browser supports notifications
-            if ('Notification' in window) {
                 // Check whether notification permissions have already been granted
                 if (Notification.permission === 'granted') {
                     // If it's okay, let's schedule a notification
@@ -31,9 +30,6 @@
                         }
                     });
                 }
-            } else {
-                alert('This browser does not support desktop notification');
-            }
         });
 
         function scheduleNotification(delay) {
@@ -41,7 +37,8 @@
                 const options = {
                     body: 'This is the body of the notification',
                     icon: 'https://via.placeholder.com/48', // URL to an icon
-                    badge: 'https://via.placeholder.com/24' // URL to a badge icon
+                    badge: 'https://via.placeholder.com/24', // URL to a badge icon
+                    vibrate: [200, 100, 200] // Vibration pattern for mobile devices
                 };
 
                 const notification = new Notification('Scheduled Notification', options);
