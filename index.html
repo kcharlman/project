@@ -3,26 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Notification Example</title>
+    <title>Scheduled Notification Example</title>
 </head>
 <body>
-    <h1>Web Notification Example</h1>
-    <button id="notifyButton">Send Notification</button>
+    <h1>Scheduled Notification Example</h1>
+    <label for="time">Send notification after (seconds):</label>
+    <input type="number" id="time" value="10">
+    <button id="scheduleButton">Schedule Notification</button>
 
     <script>
-        document.getElementById('notifyButton').addEventListener('click', () => {
+        document.getElementById('scheduleButton').addEventListener('click', () => {
+            const timeInSeconds = document.getElementById('time').value;
+            const timeInMilliseconds = timeInSeconds * 1000;
+
             // Check if the browser supports notifications
             if ('Notification' in window) {
                 // Check whether notification permissions have already been granted
                 if (Notification.permission === 'granted') {
-                    // If it's okay, let's create a notification
-                    sendNotification();
+                    // If it's okay, let's schedule a notification
+                    scheduleNotification(timeInMilliseconds);
                 } else if (Notification.permission !== 'denied') {
                     // Otherwise, we need to ask the user for permission
                     Notification.requestPermission().then(permission => {
-                        // If the user accepts, let's create a notification
+                        // If the user accepts, let's schedule a notification
                         if (permission === 'granted') {
-                            sendNotification();
+                            scheduleNotification(timeInMilliseconds);
                         }
                     });
                 }
@@ -31,17 +36,19 @@
             }
         });
 
-        function sendNotification() {
-            const options = {
-                body: 'This is the body of the notification',
-            };
+        function scheduleNotification(delay) {
+            setTimeout(() => {
+                const options = {
+                    body: 'This is the body of the notification',
+                };
 
-            const notification = new Notification('Notification Title', options);
+                const notification = new Notification('Scheduled Notification', options);
 
-            // Optionally handle notification click event
-            notification.onclick = () => {
-                window.focus();
-            };
+                // Optionally handle notification click event
+                notification.onclick = () => {
+                    window.focus();
+                };
+            }, delay);
         }
     </script>
 </body>
