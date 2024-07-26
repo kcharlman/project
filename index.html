@@ -3,55 +3,515 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scheduled Notification Example</title>
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing Script&family=Source+Code+Pro');
+        body {
+            margin: 0;
+            background: #020202;
+        }
+        canvas{
+            display:block
+        }
+
+        #wish {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #hb, #name {
+            text-align: center;
+            position: block;
+            color: #fff;
+            font-family: "Dancing Script";
+            font-size: 50px;
+            font-weight: 200;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        #hb {
+            font-size: 40px;
+            padding-bottom: 20px;
+        }
+
+        #wish-page {
+            display: none;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .box {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -99;
+          }
+          .box::before {
+            content: "";
+            width: 440px;
+            height: 440px;
+            background-color: #0f83b9;
+            position: absolute;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%);
+            border-radius: 50%;
+          }
+          .box-body {
+            position: relative;
+            height: 200px;
+            width: 200px;
+            margin-top: 123.3333333333px;
+            background-color: #cc231e;
+            border-bottom-left-radius: 5%;
+            border-bottom-right-radius: 5%;
+            box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(#762c2c,#ff0303);
+          }
+          .box-body .img{
+            opacity: 0;
+            transform: translateY(0%);
+            transition: all 0.5s;
+            margin: 0 auto;
+            display: block;
+            width: 100px;
+            height: 50px;
+            border-radius: 10px;
+            border: none;
+            color: #fff;
+            background-color: #931c18;
+          }
+          .box-body:hover {
+            cursor: pointer;
+            -webkit-animation: box-body 1s forwards ease-in-out;
+                    animation: box-body 1s forwards ease-in-out;
+          }
+          .box-body:hover .img{
+            opacity: 1;
+            z-index: 0;
+            transform: translateY(-107px);
+          }
+
+          .box-body:hover .box-lid {
+            -webkit-animation: box-lid 1s forwards ease-in-out;
+                    animation: box-lid 1s forwards ease-in-out;
+          }
+          .box-body:hover .box-bowtie::before {
+            -webkit-animation: box-bowtie-left 1.1s forwards ease-in-out;
+                    animation: box-bowtie-left 1.1s forwards ease-in-out;
+          }
+          .box-body:hover .box-bowtie::after {
+            -webkit-animation: box-bowtie-right 1.1s forwards ease-in-out;
+                    animation: box-bowtie-right 1.1s forwards ease-in-out;
+          }
+          .box-body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+                    transform: translateX(-50%);
+            width: 50px;
+            background: linear-gradient(#ffffff,#ffefa0)
+          }
+          .box-lid {
+            position: absolute;
+            z-index: 1;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+                    transform: translateX(-50%);
+            bottom: 90%;
+            height: 40px;
+            background-color: #cc231e;
+            height: 40px;
+            width: 220px;
+            border-radius: 5%;
+            box-shadow: 0 8px 4px -4px rgba(0, 0, 0, 0.3);
+          }
+          .box-lid::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+                    transform: translateX(-50%);
+            width: 50px;
+            background: linear-gradient(#ffefa0,#fff)
+          }
+          .box-bowtie {
+            z-index: 1;
+            height: 100%;
+          }
+          .box-bowtie::before, .box-bowtie::after {
+            content: "";
+            width: 83.3333333333px;
+            height: 83.3333333333px;
+            border: 16.6666666667px solid white;
+            border-radius: 50% 50% 0 50%;
+            position: absolute;
+            bottom: 99%;
+            z-index: -1;
+          }
+          .box-bowtie::before {
+            left: 50%;
+            -webkit-transform: translateX(-100%) skew(10deg, 10deg);
+                    transform: translateX(-100%) skew(10deg, 10deg);
+          }
+          .box-bowtie::after {
+            left: 50%;
+            -webkit-transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
+                    transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
+          }
+          
+          @-webkit-keyframes box-lid {
+            0%,
+            42% {
+              -webkit-transform: translate3d(-50%, 0%, 0) rotate(0deg);
+                      transform: translate3d(-50%, 0%, 0) rotate(0deg);
+            }
+            60% {
+              -webkit-transform: translate3d(-85%, -230%, 0) rotate(-25deg);
+                      transform: translate3d(-85%, -230%, 0) rotate(-25deg);
+            }
+            90%, 100% {
+              -webkit-transform: translate3d(-119%, 225%, 0) rotate(-70deg);
+                      transform: translate3d(-119%, 225%, 0) rotate(-70deg);
+            }
+          }
+          
+          @keyframes box-lid {
+            0%,
+            42% {
+              -webkit-transform: translate3d(-50%, 0%, 0) rotate(0deg);
+                      transform: translate3d(-50%, 0%, 0) rotate(0deg);
+            }
+            60% {
+              -webkit-transform: translate3d(-85%, -230%, 0) rotate(-25deg);
+                      transform: translate3d(-85%, -230%, 0) rotate(-25deg);
+            }
+            90%, 100% {
+              -webkit-transform: translate3d(-119%, 225%, 0) rotate(-70deg);
+                      transform: translate3d(-119%, 225%, 0) rotate(-70deg);
+            }
+          }
+          @-webkit-keyframes box-body {
+            0% {
+              -webkit-transform: translate3d(0%, 0%, 0) rotate(0deg);
+                      transform: translate3d(0%, 0%, 0) rotate(0deg);
+            }
+            25% {
+              -webkit-transform: translate3d(0%, 25%, 0) rotate(20deg);
+                      transform: translate3d(0%, 25%, 0) rotate(20deg);
+            }
+            50% {
+              -webkit-transform: translate3d(0%, -15%, 0) rotate(0deg);
+                      transform: translate3d(0%, -15%, 0) rotate(0deg);
+            }
+            70% {
+              -webkit-transform: translate3d(0%, 0%, 0) rotate(0deg);
+                      transform: translate3d(0%, 0%, 0) rotate(0deg);
+            }
+          }
+          @keyframes box-body {
+            0% {
+              -webkit-transform: translate3d(0%, 0%, 0) rotate(0deg);
+                      transform: translate3d(0%, 0%, 0) rotate(0deg);
+            }
+            25% {
+              -webkit-transform: translate3d(0%, 25%, 0) rotate(20deg);
+                      transform: translate3d(0%, 25%, 0) rotate(20deg);
+            }
+            50% {
+              -webkit-transform: translate3d(0%, -15%, 0) rotate(0deg);
+                      transform: translate3d(0%, -15%, 0) rotate(0deg);
+            }
+            70% {
+              -webkit-transform: translate3d(0%, 0%, 0) rotate(0deg);
+                      transform: translate3d(0%, 0%, 0) rotate(0deg);
+            }
+          }
+          @-webkit-keyframes box-bowtie-right {
+            0%,
+            50%,
+            75% {
+              -webkit-transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
+                      transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
+            }
+            90%,
+            100% {
+              -webkit-transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+                      transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+              box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.3);
+            }
+          }
+          @keyframes box-bowtie-right {
+            0%,
+            50%,
+            75% {
+              -webkit-transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
+                      transform: translateX(0%) rotate(90deg) skew(10deg, 10deg);
+            }
+            90%,
+            100% {
+              -webkit-transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+                      transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+              box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.3);
+            }
+          }
+          @-webkit-keyframes box-bowtie-left {
+            0% {
+              -webkit-transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+                      transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+            }
+            50%,
+            75% {
+              -webkit-transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+                      transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+            }
+            90%,
+            100% {
+              -webkit-transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+                      transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+            }
+          }
+          @keyframes box-bowtie-left {
+            0% {
+              -webkit-transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+                      transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+            }
+            50%,
+            75% {
+              -webkit-transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+                      transform: translate(-50%, -15%) rotate(45deg) skew(10deg, 10deg);
+            }
+            90%,
+            100% {
+              -webkit-transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+                      transform: translateX(-100%) rotate(0deg) skew(10deg, 10deg);
+            }
+          }
+          
+    </style>
 </head>
 <body>
-    <h1>Scheduled Notification Example</h1>
-    <label for="time">Send notification after (seconds):</label>
-    <input type="number" id="time" value="10">
-    <button id="scheduleButton">Schedule Notification</button>
+    <div id="wish-page">
+        <div id="wish">
+            <div id="hb">Happy Birthday</div>
+            <div id="name">Mark Edward Felix</div>
+            <div id="hb"></div>
+            <div id="hb">I love you hehe</div>
+        </div>
+        <canvas id="birthday"></canvas>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h3 class="text-center text-light my-5"><strong>Hover the box</strong></h3>
+          </div>
+          <div class="col-12 mt-5 d-flex justify-content-center">
+            <div class="box">
+              <div class="box-body">
+                <!-- <img class="img" src="https://via.placeholder.com/150"> -->
+                 <button class="img" onclick="show_wish()">Click me</button>
+                <div class="box-lid">
+                  
+                  <div class="box-bowtie"></div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <script>
-        document.getElementById('scheduleButton').addEventListener('click', () => {
-            const timeInSeconds = document.getElementById('time').value;
-            const timeInMilliseconds = timeInSeconds * 1000;
 
-            // Check if the browser supports notifications
-            if ('Notification' in window) {
-                // Check whether notification permissions have already been granted
-                if (Notification.permission === 'granted') {
-                    // If it's okay, let's schedule a notification
-                    scheduleNotification(timeInMilliseconds);
-                } else if (Notification.permission !== 'denied') {
-                    // Otherwise, we need to ask the user for permission
-                    Notification.requestPermission().then(permission => {
-                        // If the user accepts, let's schedule a notification
-                        if (permission === 'granted') {
-                            scheduleNotification(timeInMilliseconds);
-                        }
-                    });
-                }
-            } else {
-                alert('This browser does not support desktop notification');
-            }
-        });
-
-        function scheduleNotification(delay) {
-            setTimeout(() => {
-                const options = {
-                    body: 'This is the body of the notification',
-                    icon: 'https://via.placeholder.com/48', // URL to an icon
-                    badge: 'https://via.placeholder.com/24' // URL to a badge icon
-                };
-
-                const notification = new Notification('Scheduled Notification', options);
-
-                // Optionally handle notification click event
-                notification.onclick = () => {
-                    window.focus();
-                };
-            }, delay);
+        function show_wish(){
+            document.getElementById("wish-page").style.display = "block";
         }
+
+        // helper functions
+    const PI2 = Math.PI * 2
+    const random = (min, max) => Math.random() * (max - min + 1) + min | 0
+    const timestamp = _ => new Date().getTime()
+
+    // container
+    class Birthday {
+    constructor() {
+        this.resize()
+
+        // create a lovely place to store the firework
+        this.fireworks = []
+        this.counter = 0
+
+    }
+    
+    resize() {
+        this.width = canvas.width = window.innerWidth
+        let center = this.width / 2 | 0
+        this.spawnA = center - center / 4 | 0
+        this.spawnB = center + center / 4 | 0
+        
+        this.height = canvas.height = window.innerHeight
+        this.spawnC = this.height * .1
+        this.spawnD = this.height * .5
+        
+    }
+    
+    onClick(evt) {
+        let x = evt.clientX || evt.touches && evt.touches[0].pageX
+        let y = evt.clientY || evt.touches && evt.touches[0].pageY
+        
+        let count = random(3,5)
+        for(let i = 0; i < count; i++) this.fireworks.push(new Firework(
+            random(this.spawnA, this.spawnB),
+            this.height,
+            x,
+            y,
+            random(0, 260),
+            random(30, 110)))
+            
+        this.counter = -1
+        
+    }
+    
+    update(delta) {
+        ctx.globalCompositeOperation = 'hard-light'
+        ctx.fillStyle = `rgba(20,20,20,${ 7 * delta })`
+        ctx.fillRect(0, 0, this.width, this.height)
+
+        ctx.globalCompositeOperation = 'lighter'
+        for (let firework of this.fireworks) firework.update(delta)
+
+        // if enough time passed... create new new firework
+        this.counter += delta * 3 // each second
+        if (this.counter >= 1) {
+        this.fireworks.push(new Firework(
+            random(this.spawnA, this.spawnB),
+            this.height,
+            random(0, this.width),
+            random(this.spawnC, this.spawnD),
+            random(0, 360),
+            random(30, 110)))
+        this.counter = 0
+        }
+
+        // remove the dead fireworks
+        if (this.fireworks.length > 1000) this.fireworks = this.fireworks.filter(firework => !firework.dead)
+
+    }
+    }
+
+    class Firework {
+    constructor(x, y, targetX, targetY, shade, offsprings) {
+        this.dead = false
+        this.offsprings = offsprings
+
+        this.x = x
+        this.y = y
+        this.targetX = targetX
+        this.targetY = targetY
+
+        this.shade = shade
+        this.history = []
+    }
+    update(delta) {
+        if (this.dead) return
+
+        let xDiff = this.targetX - this.x
+        let yDiff = this.targetY - this.y
+        if (Math.abs(xDiff) > 3 || Math.abs(yDiff) > 3) { // is still moving
+        this.x += xDiff * 2 * delta
+        this.y += yDiff * 2 * delta
+
+        this.history.push({
+            x: this.x,
+            y: this.y
+        })
+
+        if (this.history.length > 20) this.history.shift()
+
+        } else {
+        if (this.offsprings && !this.madeChilds) {
+            
+            let babies = this.offsprings / 2
+            for (let i = 0; i < babies; i++) {
+            let targetX = this.x + this.offsprings * Math.cos(PI2 * i / babies) | 0
+            let targetY = this.y + this.offsprings * Math.sin(PI2 * i / babies) | 0
+
+            birthday.fireworks.push(new Firework(this.x, this.y, targetX, targetY, this.shade, 0))
+
+            }
+
+        }
+        this.madeChilds = true
+        this.history.shift()
+        }
+        
+        if (this.history.length === 0) this.dead = true
+        else if (this.offsprings) { 
+            for (let i = 0; this.history.length > i; i++) {
+            let point = this.history[i]
+            ctx.beginPath()
+            ctx.fillStyle = 'hsl(' + this.shade + ',100%,' + i + '%)'
+            ctx.arc(point.x, point.y, 1, 0, PI2, false)
+            ctx.fill()
+            } 
+        } else {
+        ctx.beginPath()
+        ctx.fillStyle = 'hsl(' + this.shade + ',100%,50%)'
+        ctx.arc(this.x, this.y, 1, 0, PI2, false)
+        ctx.fill()
+        }
+
+    }
+    }
+
+    let canvas = document.getElementById('birthday')
+    let ctx = canvas.getContext('2d')
+
+    let then = timestamp()
+
+    let birthday = new Birthday
+    window.onresize = () => birthday.resize()
+    document.onclick = evt => birthday.onClick(evt)
+    document.ontouchstart = evt => birthday.onClick(evt)
+
+    ;(function loop(){
+        requestAnimationFrame(loop)
+
+        let now = timestamp()
+        let delta = now - then
+
+        then = now
+        birthday.update(delta / 1000)
+
+    })()
     </script>
 </body>
 </html>
